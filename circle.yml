@@ -1,0 +1,43 @@
+machine:
+  timezone:
+    Europe/Copenhagen
+
+  php:
+    version: 7.1.0
+
+  node:
+    version: 6.5
+
+  environment:
+    APP_ENV: testing
+    DB_USERNAME: root
+    DB_DATABASE: test
+
+database:
+  override:
+    - mysql -u root -e 'create database test'
+
+dependencies:
+  cache_directories:
+    - vendor
+    - node_modules
+    - ~/.cache/composer
+
+  pre:
+    - composer global require hirak/prestissimo
+
+  override:
+    - composer install --prefer-dist --no-interaction
+
+test:
+  pre:
+    - php artisan migrate
+    - php artisan db:seed
+
+  override:
+    - php vendor/bin/phpunit
+
+general:
+  branches:
+    only:
+      - master
