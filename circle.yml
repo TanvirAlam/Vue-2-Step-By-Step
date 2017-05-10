@@ -24,8 +24,8 @@ dependencies:
 database:
   override:
     - mysql -u root -e 'create database test'
-    - php artisan migrate
-    - php artisan db:seed
+#    - php artisan migrate
+#    - php artisan db:seed
 
 test:
   override:
